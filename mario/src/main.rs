@@ -1,15 +1,29 @@
-use std::io;
-
 fn main() {
-    let height: u8;
-    loop {
-        print!("Height:");
-        let _ = io::stdout().flush();
-        io::stdin().read_line(&mut height).expect("Failed");
-        let height: i32 = match height.trim().parse() {
-            Ok(ht) => ht,
-            Err(_) => continue,
-        };  
-        if !(height < 0 || height > 23) { n = height; break;}
+    // Prompt for Input
+    let height = get_height();
+
+    // Print the Pyramid
+    for y in 1..height {
+        for x in 1..height {
+            if x + y >= height {
+                print!("#");
+            } else {
+                print!(" ");
+            }
+        }
+        println!("  {}", "#".repeat(y));
     }
+}
+
+fn get_height() -> usize {
+    let height: usize;
+    loop {
+        if let Ok(n) = cs50::get_usize("Height: ") {
+            if n > 0 && n < 9 {
+                height = n + 1;
+                break;
+            }
+        }
+    }
+    height
 }
